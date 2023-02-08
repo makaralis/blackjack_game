@@ -9,7 +9,7 @@ function App() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/game/start")
+      .get("api/game/start")
       .then((res) => {
         console.log(res.data)
         setPlayerCards(res.data.playerCards);
@@ -23,12 +23,13 @@ function App() {
 
   const handleHit = () => {
     axios
-      .post("http://localhost:5000/api/game/hit", {
+      .post("api/game/hit", {
         playerCards: playerCards,
       })
       .then((res) => {
         setPlayerCards(res.data.playerCards);
-        if (res.data.gameResult === "Player busts") {
+
+        if (res.data.gameResult === "You have busted.") {
           setGameResult("You lose");
         }
       })
@@ -39,7 +40,7 @@ function App() {
 
   const handleStand = () => {
     axios
-      .post("http://localhost:5000/api/game/stand", {
+      .post("api/game/stand", {
         playerCards: playerCards,
         dealerCards: dealerCards,
       })
@@ -52,12 +53,13 @@ function App() {
       });
   };
 
+
   return (
     <div>
       {gameStarted ? (
         <div>
           <p>Player cards: {playerCards.join(", ")}</p>
-          <p>Dealer card: {dealerCards[0]}</p>
+          <p>Dealer card: {dealerCards[0].suit}</p>
           <button onClick={handleHit}>Hit</button>
           <button onClick={handleStand}>Stand</button>
           {gameResult ? <p>{gameResult}</p> : null}
