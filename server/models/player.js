@@ -2,7 +2,7 @@ class Player {
   constructor(name, cards) {
     this.name = name;
     this.cards = cards;
-    this.total = cards.reduce((acc, card) => acc + card.value, acc);
+    this.total = cards.reduce((acc, card) => acc + card.value, 0);
   }
 
   addCard(card) {
