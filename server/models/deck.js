@@ -1,48 +1,41 @@
-const suits = ['hearts', 'diamonds', 'spades', 'clubs'];
-const faces = ['ace', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'jack', 'queen', 'king'];
+import axios from 'axios';
 
 class Deck {
   constructor() {
-    this.deck = [];
-    this.dealtCards = [];
-    this.createDeck();
-    this.shuffleDeck();
+    this.id = 0;
+    this.cards = [];
   }
 
-  createDeck() {
-    for (const suit of suits) {
-      for (const face of faces) {
-        let value;
-  
-        if (typeof face === 'number') {
-          value = face;
-        } else if (face === 'ace') {
-          value = 11;
-        } else {
-          value = 10;
-        }
-  
-        this.deck.push({
-          suit,
-          face,
-          value,
-        });
+  updateFaceCardValues() {
+    this.cards.forEach(card => {
+      if (
+        card.value === "QUEEN" ||
+        card.value === "KING" ||
+        card.value === "JACK"
+      ) {
+        card.face = card.value;
+        card.value = 10;
+      } else if (card.value === "ACE") {
+        card.face = "ACE";
+        card.value = 11;
+      } else {
+        card.value = parseInt(card.value);
       }
+    });
+  };
+
+  async createDeck() {
+    try {
+      // creating new deck with all of the cards
+      const res = await axios.get("https://www.deckofcardsapi.com/api/deck/new/draw/?count=52");
+
+      this.id = res.data.deck_id;
+      this.cards = res.data.cards;
+      this.updateFaceCardValues();
     }
-  }
-
-  shuffleDeck() {
-    for (let i = this.deck.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [this.deck[i], this.deck[j]] = [this.deck[j], this.deck[i]];
+    catch (e) {
+      console.log(e);
     }
-  }
-
-  dealCard() {
-    let dealtCard = this.deck.pop();
-    this.dealtCards.push(dealtCard);
-
-    return dealtCard;
   }
 }
 
