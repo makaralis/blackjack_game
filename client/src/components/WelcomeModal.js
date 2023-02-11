@@ -1,4 +1,3 @@
-import React from 'react';
 import { Modal, Button, Typography, List, ListItem } from '@material-ui/core';
 
 import { useStyles } from '../styles/welcomeModal';

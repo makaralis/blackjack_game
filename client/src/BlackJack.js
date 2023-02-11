@@ -58,6 +58,12 @@ const BlackJack = () => {
         })
         .then((res) => {
           setDealerCards(res.data.dealerCards);
+
+          // means that the dealer busted
+          if (res.data.message) {
+            setIsGameModalOpen(true);
+            setGameModalMessage(res.data.message);
+          }
         })
         .catch((err) => {
           console.log(err);
