@@ -16,8 +16,8 @@ const WelcomeModal = ({ open, handleClose }) => {
     <div className={classes.paper}>
         <Typography variant='h2' className={classes.title}>Rules of the BlackJack 😈</Typography>
         <List component="nav">
-            {modalListText.map((text) => 
-                <ListItem>
+            {modalListText.map((text,id) => 
+                <ListItem key={id}>
                     <Typography variant='h5'>{'- ' + text}</Typography>
                 </ListItem>)
             }

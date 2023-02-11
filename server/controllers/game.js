@@ -26,6 +26,7 @@ export const startGame = async (req, res) => {
   res.status(200).json({
     playerCards: player.cards,
     dealerCards: [dealer.cards[0]],
+    playerTotal: player.total
   });
 }
 
@@ -38,6 +39,7 @@ export const hit = async (req, res) => {
       message: 'You have busted.',
       playerCards: player.cards,
       dealerCards: dealer.cards,
+      playerTotal: player.total
     });
   }
   
@@ -45,6 +47,7 @@ export const hit = async (req, res) => {
   res.status(200).json({
     playerCards: player.cards,
     dealerCards: [dealer.cards[0]],
+    playerTotal: player.total
   });
 }
 
@@ -67,6 +70,7 @@ export const stand = async (req, res) => {
       message: 'Dealer has busted.',
       playerCards: player.cards,
       dealerCards: dealer.cards,
+      playerTotal: player.total
     });
   }
   
@@ -77,6 +81,7 @@ export const stand = async (req, res) => {
       message: 'Dealer wins.',
       playerCards: player.cards,
       dealerCards: dealer.cards,
+      playerTotal: player.total
     });
   }
 
@@ -85,5 +90,6 @@ export const stand = async (req, res) => {
     message: 'You win.',
     playerCards: player.cards,
     dealerCards: dealer.cards,
+    playerTotal: player.total
   });
 }

@@ -1,8 +1,9 @@
 import axios from "axios";
+import { useState, useEffect, useCallback } from "react";
 import { Box, Typography } from "@material-ui/core";
-import { useState, useEffect } from "react";
 
 import "./index.css";
+import GameBoard from "./components/GameBoard";
 import WelcomeModal from "./components/WelcomeModal";
 
 const BlackJack = () => {
@@ -11,20 +12,27 @@ const BlackJack = () => {
     const [gameStarted, setGameStarted] = useState(false);
     const [gameResult, setGameResult] = useState("");
     const [isWelcomeModalOpen, setIsWelcomeModalOpen] = useState(true);
-  
-    useEffect(() => {
+    const [isGameModalOpen, setIsGameModalOpen] = useState(false);
+    const [gameModalMessage, setGameModalMessage] = useState();
+    const [playerTotal, setPlayerTotal] = useState();
+
+    const startGame = useCallback(async () => {
       axios
         .get("api/game/start")
         .then((res) => {
-          console.log(res.data)
           setPlayerCards(res.data.playerCards);
           setDealerCards(res.data.dealerCards);
           setGameStarted(true);
+          setPlayerTotal(res.data.playerTotal);
         })
         .catch((err) => {
           console.log(err);
         });
     }, []);
+
+    useEffect(() => {
+      startGame();
+    }, [startGame]);
   
     const handleHit = () => {
       axios
@@ -34,9 +42,12 @@ const BlackJack = () => {
         .then((res) => {
           setPlayerCards(res.data.playerCards);
           setDealerCards(res.data.dealerCards);
-  
-          if (res.data.gameResult === "You have busted.") {
-            setGameResult("You lose");
+          setPlayerTotal(res.data.playerTotal);
+
+          // means that the player busted
+          if (res.data.message) {
+            setIsGameModalOpen(true);
+            setGameModalMessage(res.data.message);
           }
         })
         .catch((err) => {
@@ -58,19 +69,25 @@ const BlackJack = () => {
           console.log(err);
         });
     };
+
   
     return (
         <>
         {isWelcomeModalOpen ? <WelcomeModal open={isWelcomeModalOpen} handleClose={() => setIsWelcomeModalOpen(false)}/>
-            : 
-            <>
-              <Typography variant="h1">
-                <Box className="h1-header">Welcome to BlackJack Game</Box>
-              </Typography>
-              <Box id="table">
-                
-              </Box>
-            </>
+          : 
+          <>
+            <Typography variant="h1" className="h1-header">
+              <Box className="h1-header">Welcome to BlackJack Game</Box>
+            </Typography>
+            <Box id="table">
+              <GameBoard 
+                handleHit={handleHit} handleStand={handleStand} dealerCards={dealerCards} playerCards={playerCards}
+                isGameModalOpen={isGameModalOpen} gameModalClose={() => { setIsGameModalOpen(false); } }
+                gameMessage={gameModalMessage}
+                playerTotal={playerTotal}
+              />
+            </Box>
+          </>
         }
         </>
     )
