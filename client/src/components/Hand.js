@@ -11,11 +11,10 @@ const Hand = (props) => {
     <div className={props.player ? classes.playerHand : classes.dealerHand}>
       <Typography variant='h4' className={classes.total}>{props.player ? ('Player total: ' + props.total) : ''}</Typography>
       {props.cards.map((card, id) => {
-        if (id === 1 && !props.player) {
-          return <Card src={cardBack} key={id} />
-        }
         return <Card src={card.image} key={id} />
       })}
+      {/* in case its a dealer's hand and game is not over, we are hiding the second card */}
+      {!props.isShowing && !props.player ? <Card src={cardBack} /> : <></>}
     </div>
   );
 }

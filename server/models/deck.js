@@ -26,8 +26,8 @@ class Deck {
 
   async createDeck() {
     try {
-      // creating new deck with all of the cards
-      const res = await axios.get("https://www.deckofcardsapi.com/api/deck/new/draw/?count=52");
+      // creating new deck with 4 cards
+      const res = await axios.get("https://www.deckofcardsapi.com/api/deck/new/draw/?count=4");
 
       this.id = res.data.deck_id;
       this.cards = res.data.cards;

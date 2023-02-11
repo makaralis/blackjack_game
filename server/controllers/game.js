@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 import Deck from '../models/deck.js';
 import Player from '../models/player.js';
 
@@ -17,8 +19,6 @@ export const startGame = async (req, res) => {
   currentDeck = new Deck();
 
   await currentDeck.createDeck();
-  // // no need when the game is loading for the first time, but for the next game is important to shuffle
-  // await currentDeck.shuffleDeck();
 
   player = new Player('Player', currentDeck.cards.splice(0, 2));
   dealer = new Player('Dealer', currentDeck.cards.splice(0, 2));
@@ -30,7 +30,21 @@ export const startGame = async (req, res) => {
   });
 }
 
+
 export const hit = async (req, res) => {
+  try {
+    const res = await axios.get(`https://deckofcardsapi.com/api/deck/${currentDeck.id}/draw/?count=1`);
+
+    player.cards.push(res.data.cards[0]);
+    // updating the values for the cards
+    player.updateFaceCardValues();
+    // updating total value for the player
+    player.total = player.cards.reduce((acc, card) => acc + card.value, 0);;
+  }
+  catch (e) {
+    console.log(e);
+  }
+
   if (player.total > 21) {
     gameInProgress = false;
 

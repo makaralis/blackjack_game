@@ -9,8 +9,6 @@ import WelcomeModal from "./components/WelcomeModal";
 const BlackJack = () => {
     const [playerCards, setPlayerCards] = useState([]);
     const [dealerCards, setDealerCards] = useState([]);
-    const [gameStarted, setGameStarted] = useState(false);
-    const [gameResult, setGameResult] = useState("");
     const [isWelcomeModalOpen, setIsWelcomeModalOpen] = useState(true);
     const [isGameModalOpen, setIsGameModalOpen] = useState(false);
     const [gameModalMessage, setGameModalMessage] = useState();
@@ -22,7 +20,6 @@ const BlackJack = () => {
         .then((res) => {
           setPlayerCards(res.data.playerCards);
           setDealerCards(res.data.dealerCards);
-          setGameStarted(true);
           setPlayerTotal(res.data.playerTotal);
         })
         .catch((err) => {
@@ -63,7 +60,6 @@ const BlackJack = () => {
         })
         .then((res) => {
           setDealerCards(res.data.dealerCards);
-          setGameResult(res.data.gameResult);
         })
         .catch((err) => {
           console.log(err);
