@@ -9,7 +9,6 @@ const GameBoard = (props) => {
     const classes = useStyles();
     
     return (
-     <>
         <div>
             <InGameModal
                 message={props.gameMessage}
@@ -28,12 +27,11 @@ const GameBoard = (props) => {
                     total={props.playerTotal}
                 />
                 <div className={classes.btnsContainer}>
-                    <Button onClick={props.handleHit}  color="primary" variant='outlined' className={classes.hitBtn}>HIT</Button>
-                    <Button onClick={props.handleStand}   color="primary" variant='outlined' className={classes.standBtn}>STAND</Button>
+                    <Button onClick={props.handleHit} color="primary" variant='outlined' className={classes.hitBtn}>HIT</Button>
+                    <Button onClick={props.handleStand}  color="primary" variant='outlined' className={classes.standBtn}>STAND</Button>
                 </div>
             </div>
         </div>
-      </>
     )
 }
 

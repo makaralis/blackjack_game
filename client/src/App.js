@@ -6,7 +6,7 @@ import BlackJack from "./BlackJack";
 function App() {
   return (
     <Box className="App">
-        <BlackJack />
+      <BlackJack />
     </Box>
   );
 }

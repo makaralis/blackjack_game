@@ -9,7 +9,7 @@ const Hand = (props) => {
 
   return (
     <div className={props.player ? classes.playerHand : classes.dealerHand}>
-      <Typography variant='h4' className={classes.total}>{props.player ? ('Player total: ' + props.total) : ''}</Typography>
+      <Typography variant='h4' className={classes.total}>{props.player ? ('Your total: ' + props.total) : ''}</Typography>
       {props.cards.map((card, id) => {
         return <Card src={card.image} key={id} />
       })}
