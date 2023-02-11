@@ -4,6 +4,9 @@
 
 ## Project Description
 
+A web app game that allows a human user to play a
+simplified version of Blackjack against a computer opponent.
+
 ## Project Links
 
 - Github Repo: https://github.com/makaralis/blackjack_game
