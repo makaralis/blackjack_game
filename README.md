@@ -22,5 +22,5 @@ simplified version of Blackjack against a computer opponent.
 
 ## Additional Libraries
 
-I utilized Material UI to help style my modals and buttons
+I utilized Material UI to style modals, buttons, etc.
 https://v4.mui.com/getting-started/
