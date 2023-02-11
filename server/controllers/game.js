@@ -30,20 +30,8 @@ export const startGame = async (req, res) => {
   });
 }
 
-
 export const hit = async (req, res) => {
-  try {
-    const res = await axios.get(`https://deckofcardsapi.com/api/deck/${currentDeck.id}/draw/?count=1`);
-
-    player.cards.push(res.data.cards[0]);
-    // updating the values for the cards
-    player.updateFaceCardValues();
-    // updating total value for the player
-    player.total = player.cards.reduce((acc, card) => acc + card.value, 0);;
-  }
-  catch (e) {
-    console.log(e);
-  }
+  await player.addCard(currentDeck.id);
 
   if (player.total > 21) {
     gameInProgress = false;
@@ -73,7 +61,7 @@ export const stand = async (req, res) => {
   }
   
   while (dealer.total < 17) {
-    dealer.hit(currentDeck.cards.splice(0, 1));
+    await dealer.addCard(currentDeck.id);
   }
 
   if (dealer.total > 21) {

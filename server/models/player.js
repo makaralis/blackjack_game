@@ -1,3 +1,4 @@
+import axios from 'axios';
 class Player {
   constructor(name, cards) {
     this.name = name;
@@ -22,6 +23,21 @@ class Player {
       }
     });
   };
+
+  async addCard(deckId) {
+    try {
+      const res = await axios.get(`https://deckofcardsapi.com/api/deck/${deckId}/draw/?count=1`);
+  
+      this.cards.push(res.data.cards[0]);
+      // updating the values for the cards
+      this.updateFaceCardValues();
+      // updating total value for the player
+      this.total = this.cards.reduce((acc, card) => acc + card.value, 0);;
+    }
+    catch (e) {
+      console.log(e);
+    }
+  }
 }
   
 export default Player;

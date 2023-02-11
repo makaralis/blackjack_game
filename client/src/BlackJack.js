@@ -1,6 +1,6 @@
 import axios from "axios";
-import { useState, useEffect, useCallback } from "react";
 import { Box, Typography } from "@material-ui/core";
+import { useState, useEffect, useCallback } from "react";
 
 import "./index.css";
 import GameBoard from "./components/GameBoard";
@@ -26,11 +26,8 @@ const BlackJack = () => {
           console.log(err);
         });
     }, []);
-
-    useEffect(() => {
-      startGame();
-    }, [startGame]);
   
+    // player hits
     const handleHit = () => {
       axios
         .post("api/game/hit", {
@@ -52,6 +49,7 @@ const BlackJack = () => {
         });
     };
   
+    // dealer hits
     const handleStand = () => {
       axios
         .post("api/game/stand", {
@@ -66,7 +64,10 @@ const BlackJack = () => {
         });
     };
 
-  
+    useEffect(() => {
+      startGame().catch(console.error);
+    }, [startGame]);
+
     return (
         <>
         {isWelcomeModalOpen ? <WelcomeModal open={isWelcomeModalOpen} handleClose={() => setIsWelcomeModalOpen(false)}/>
@@ -78,7 +79,7 @@ const BlackJack = () => {
             <Box id="table">
               <GameBoard 
                 handleHit={handleHit} handleStand={handleStand} dealerCards={dealerCards} playerCards={playerCards}
-                isGameModalOpen={isGameModalOpen} gameModalClose={() => { setIsGameModalOpen(false); } }
+                isGameModalOpen={isGameModalOpen} gameModalClose={async () => { setIsGameModalOpen(false); await startGame(); } }
                 gameMessage={gameModalMessage}
                 playerTotal={playerTotal}
               />
