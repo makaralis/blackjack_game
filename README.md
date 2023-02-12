@@ -10,7 +10,6 @@ simplified version of Blackjack against a computer opponent.
 ## Project Links
 
 - Github Repo: https://github.com/makaralis/blackjack_game
-- Deployed Link: https://blackjack-client.onrender.com
 
 ### MVP
 
