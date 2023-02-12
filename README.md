@@ -24,3 +24,9 @@ simplified version of Blackjack against a computer opponent.
 
 I utilized Material UI to style modals, buttons, etc.
 https://v4.mui.com/getting-started/
+
+## To run backend app:
+npm install && npm start
+
+## To run frontend app:
+yarn && yarn start
